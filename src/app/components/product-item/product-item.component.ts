@@ -9,8 +9,11 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class ProductItemComponent implements OnInit {
 
-  @Input() product: Product | undefined;
-  @Input() productId: number | undefined;
+  @Input() product?: Product;
+  @Input() productId?: number;
+
+  isFulLView: boolean = false;
+
   addToCartOptions: number[];
 
   constructor(
@@ -25,14 +28,14 @@ export class ProductItemComponent implements OnInit {
     if (!this.productId) {
       this.productId = Number(this.route.snapshot.paramMap.get('productId'));
     }
-    if (!this.product) {
-      this.productService.getProduct(this.productId || 1)
+
+    // when productId is passed via route url and no product pass as an input
+    this.isFulLView = !!this.productId && !this.product;
+
+    if (this.isFulLView) {
+      this.productService.getProduct(this.productId)
         .subscribe(products => products.length !== 0 ? this.product = products[0] : undefined);
     }
-  }
-
-  getPrice(): string {
-    return this.product?.price ? `$${this.product.price}` : "";
   }
 
 }

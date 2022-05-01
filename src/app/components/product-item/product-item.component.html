@@ -1,14 +1,30 @@
-<mat-card *ngIf="product" fxLayout="column" fxLayoutAlign="space-around center" class="product-container">
-    <img class="product-image" [src]="product.url" [alt]="product.name + 'product'"/>
-    <a [routerLink]="['/product/' + productId, {productId}]">{{product.name}}</a>
-    <p>{{getPrice()}}</p>
-    <mat-form-field appearance="fill">
-        <mat-label>Number of items</mat-label>
-        <mat-select>
-            <mat-option *ngFor="let option of addToCartOptions" [value]="option">
-                {{option}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-    <button mat-flat-button color="primary">Add to cart</button>
+<mat-card *ngIf="product"
+          [fxLayout]="isFulLView ? 'row' : 'column'"
+          fxLayoutAlign="space-around center" class="product-container"
+          [ngStyle]="isFulLView && {'box-shadow': 'none'} || {}"
+>
+    <img [class.product-image__full-view]="isFulLView"
+         [class.product-image__thumbnail]="!isFulLView"
+         [src]="product.url" [alt]="product.name + 'product'"
+         [routerLink]="['/product/' + productId, {productId}]"
+    />
+    <div fxLayout="column" [fxLayoutAlign]="!isFulLView ? 'start center' : ''">
+        <a *ngIf="!isFulLView; else headerProductTitle"
+           [routerLink]="['/product/' + productId, {productId}]">{{product.name}}</a>
+        <ng-template #headerProductTitle>
+            <h1>{{product.name}}</h1>
+        </ng-template>
+        <p>{{'$' + product.price}}</p>
+        <p *ngIf="isFulLView">{{product.description}}</p>
+        <mat-form-field appearance="fill">
+            <mat-label>Number of items</mat-label>
+            <mat-select>
+                <mat-option *ngFor="let option of addToCartOptions" [value]="option">
+                    {{option}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <button mat-flat-button color="primary">Add to cart</button>
+        <button *ngIf="isFulLView" mat-button routerLink="/products" class="back-link">← Back to products list</button>
+    </div>
 </mat-card>
