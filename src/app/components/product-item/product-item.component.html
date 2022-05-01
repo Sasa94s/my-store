@@ -1,2 +1,14 @@
-<p>product-item works!</p>
-<app-product-item-detail></app-product-item-detail>
+<mat-card fxLayout="column" fxLayoutAlign="space-around center">
+    <img class="product-image" [src]="product?.url" [alt]="product?.name + 'product'" />
+    <p>{{product?.name}}</p>
+    <p>{{getPrice()}}</p>
+    <mat-form-field appearance="fill">
+        <mat-label>Number of items</mat-label>
+        <mat-select>
+            <mat-option *ngFor="let option of addToCartOptions" [value]="option">
+                {{option}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <button mat-flat-button color="primary">Add to cart</button>
+</mat-card>

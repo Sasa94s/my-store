@@ -12,6 +12,10 @@ import { HeaderComponent } from './layout/header/header.component';
 import {HttpClientModule} from "@angular/common/http";
 import {FlexModule} from "@angular/flex-layout";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatButtonModule} from "@angular/material/button";
+import {MatOptionModule} from "@angular/material/core";
+import {MatSelectModule} from "@angular/material/select";
+import {MatCardModule} from "@angular/material/card";
 
 @NgModule({
   declarations: [
@@ -29,6 +33,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HttpClientModule,
     FlexModule,
     BrowserAnimationsModule,
+    MatButtonModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatCardModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

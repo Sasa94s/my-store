@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-product-item',
@@ -7,9 +7,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductItemComponent implements OnInit {
 
-  constructor() { }
+  @Input() product: Product | undefined;
+  addToCartOptions: number[];
+
+  constructor() {
+    // initialize an array with 1 to 10 values
+    this.addToCartOptions = [...Array(11).keys()].slice(1);
+  }
 
   ngOnInit(): void {
+  }
+
+  getPrice(): string {
+    return this.product?.price ? `$${this.product.price}` : "";
   }
 
 }

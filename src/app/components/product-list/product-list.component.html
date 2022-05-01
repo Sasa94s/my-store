@@ -1,2 +1,7 @@
-<p>product-list works!</p>
-<app-product-item></app-product-item>
+<div fxLayout="row wrap" fxLayoutAlign="space-around center">
+    <app-product-item
+            *ngFor="let product of products" [product]="product"
+            fxFlex="30" fxFlex.md="40" fxFlex.sm="45" fxFlex.xs="100"
+    >
+    </app-product-item>
+</div>
