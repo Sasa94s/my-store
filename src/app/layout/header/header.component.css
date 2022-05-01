@@ -1,10 +1,15 @@
 .header {
-  text-align: center;
-  background: #33B5E5;
-  color: #fff;
-  padding: 12px;
+    text-align: center;
+    background: #33B5E5;
+    color: #fff;
+    padding: 1rem;
 }
 
 a {
-  color: #ffffff;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.separator {
+    padding: 0 1em;
 }

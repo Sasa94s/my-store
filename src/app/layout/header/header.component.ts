@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {RouterService} from "../../shared/services/router.service";
 
 @Component({
   selector: 'app-header',
@@ -6,10 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  title: string = '';
 
-  constructor() { }
+  constructor(private routerService: RouterService) {
+  }
 
   ngOnInit(): void {
+    this.routerService.getRouterData()
+      .subscribe(data => this.title = data.title);
   }
 
 }
