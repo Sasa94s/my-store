@@ -3,6 +3,10 @@
     background: #33B5E5;
     color: #fff;
     padding: 1rem;
+    overflow: hidden;
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }
 
 a {

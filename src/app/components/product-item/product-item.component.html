@@ -18,13 +18,13 @@
         <p *ngIf="isFulLView">{{product.description}}</p>
         <mat-form-field appearance="fill">
             <mat-label>Number of items</mat-label>
-            <mat-select>
+            <mat-select [(value)]="selectedAmount">
                 <mat-option *ngFor="let option of addToCartOptions" [value]="option">
                     {{option}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <button mat-flat-button color="primary">Add to cart</button>
+        <button mat-flat-button color="primary" (click)="addToCart(selectedAmount, product)">Add to cart</button>
         <button *ngIf="isFulLView" mat-button routerLink="/products" class="back-link">← Back to products list</button>
     </div>
 </mat-card>

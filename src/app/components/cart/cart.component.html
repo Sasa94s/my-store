@@ -1,1 +1,40 @@
-<p>cart works!</p>
+<div fxLayout="row" fxLayoutAlign="space-around center" class="cart-container"
+     *ngIf="cartService.getCart().size !== 0; else noCartItems">
+    <div fxLayout="column" fxLayoutAlign="start start" fxFlex="50" fxLayoutGap="1rem">
+        <div *ngFor="let cartItem of cartService.getCart() | keyvalue" fxLayout="row"
+             fxLayoutAlign="space-around center">
+            <img [src]="cartItem.value.url" [alt]="cartItem.value.name + 'product'"/>
+            <div class="cart-item-details">
+                <h3>{{cartItem.value.name}}</h3>
+                <p>${{cartItem.value.price}}</p>
+                <mat-form-field appearance="fill">
+                    <mat-label>Amount</mat-label>
+                    <input matInput [value]="cartItem.value.amount+''"/>
+                </mat-form-field>
+            </div>
+        </div>
+        <h1>Total: <span>${{totalAmount}}</span></h1>
+    </div>
+    <div fxLayout="column" fxFlex="30" fxLayoutGap="1rem">
+        <mat-form-field appearance="fill">
+            <mat-label>Full Name</mat-label>
+            <input matInput placeholder="(minimum 3 characters)" [formControl]="fullName" required>
+            <mat-error *ngIf="fullName.invalid">{{getErrorMessage('full name')}}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Address</mat-label>
+            <input matInput placeholder="(minimum 6 characters)" [formControl]="address" required>
+            <mat-error *ngIf="address.invalid">{{getErrorMessage('address')}}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Credit Card Number</mat-label>
+            <input matInput placeholder="(16-digit number)" [formControl]="creditCardNumber" required>
+            <mat-error *ngIf="creditCardNumber.invalid">{{getErrorMessage('credit card number')}}</mat-error>
+            <mat-hint>We'll never share your payment details with anyone else.</mat-hint>
+        </mat-form-field>
+        <button mat-flat-button color="primary">Submit</button>
+    </div>
+</div>
+<ng-template #noCartItems>
+    <h1 class="empty-cart-message">No Products added to the Cart!</h1>
+</ng-template>

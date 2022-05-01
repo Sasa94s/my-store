@@ -1,4 +1,10 @@
-<mat-toolbar class="header" fxLayout="column" fxLayoutAlign="center">
-    <a routerLink="/products">My Store</a>
-    <span>{{title}}</span>
+<mat-toolbar id="header" class="header" fxLayout="column" fxLayoutAlign="center">
+    <span id="header-main-title"><a routerLink="/products">My Store</a></span>
+    <span id="header-pages-title">
+        <span id="header-page-title">{{title}}</span>
+        <span id="header-cart-title" *ngIf="title !== 'Cart'">
+            <span> | </span>
+            <a routerLink="/cart">Cart</a>
+        </span>
+    </span>
 </mat-toolbar>
