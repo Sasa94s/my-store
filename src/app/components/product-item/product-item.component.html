@@ -1,6 +1,6 @@
-<mat-card fxLayout="column" fxLayoutAlign="space-around center">
-    <img class="product-image" [src]="product?.url" [alt]="product?.name + 'product'" />
-    <p>{{product?.name}}</p>
+<mat-card *ngIf="product" fxLayout="column" fxLayoutAlign="space-around center">
+    <img class="product-image" [src]="product.url" [alt]="product.name + 'product'"/>
+    <a [routerLink]="['/product/' + productId, {productId}]">{{product.name}}</a>
     <p>{{getPrice()}}</p>
     <mat-form-field appearance="fill">
         <mat-label>Number of items</mat-label>

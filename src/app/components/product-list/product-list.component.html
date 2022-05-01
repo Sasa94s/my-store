@@ -1,7 +1,9 @@
 <div fxLayout="row wrap" fxLayoutAlign="space-around center">
     <app-product-item
-            *ngFor="let product of products" [product]="product"
             fxFlex="30" fxFlex.md="40" fxFlex.sm="45" fxFlex.xs="100"
+            *ngFor="let product of products; let idx = index"
+            [product]="product"
+            [productId]="idx+1"
     >
     </app-product-item>
 </div>
