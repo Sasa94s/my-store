@@ -1,4 +1,4 @@
-<mat-card *ngIf="product" fxLayout="column" fxLayoutAlign="space-around center">
+<mat-card *ngIf="product" fxLayout="column" fxLayoutAlign="space-around center" class="product-container">
     <img class="product-image" [src]="product.url" [alt]="product.name + 'product'"/>
     <a [routerLink]="['/product/' + productId, {productId}]">{{product.name}}</a>
     <p>{{getPrice()}}</p>
