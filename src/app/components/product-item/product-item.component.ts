@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ProductService} from "../../shared/services/product.service";
 import {ActivatedRoute} from "@angular/router";
 import {CartService} from "../../shared/services/cart.service";
@@ -14,6 +14,9 @@ export class ProductItemComponent implements OnInit {
   @Input() product?: Product;
   @Input() productId?: number;
 
+  @Output() removeFromCart: EventEmitter<Status>;
+  @Output() addToCart: EventEmitter<Status>;
+
   selectedAmount: number = 0;
   isFulLView: boolean = false;
   addToCartOptions: number[];
@@ -26,6 +29,8 @@ export class ProductItemComponent implements OnInit {
   ) {
     // initialize an array with 1 to 10 values
     this.addToCartOptions = [...Array(11).keys()].slice(1);
+    this.addToCart = new EventEmitter<Status>();
+    this.removeFromCart = new EventEmitter<Status>();
   }
 
   ngOnInit(): void {
@@ -42,15 +47,23 @@ export class ProductItemComponent implements OnInit {
     }
 
     this.cartService.getAddToCartStatusMessage()
-      .subscribe(status => this.alertService.openSnackBar('Item is added to cart successfully!', 'OK'));
+      .subscribe(status => this.addToCart.emit({state: status, message: 'Item is added to cart successfully!'}));
 
     this.cartService.getRemoveFromCartStatusMessage()
-      .subscribe(status => this.alertService.openSnackBar(status ? 'Item is removed from cart successfully!' : 'Item is not found to be removed from cart.', 'OK'));
+      .subscribe(status => this.removeFromCart.emit({
+        state: status,
+        message: status ? 'Item is removed from cart successfully!' : 'Item is not found to be removed from cart.'
+      }));
+
+    if (this.isFulLView) {
+      this.addToCart.subscribe(status => this.alertService.openSnackBar(status.message, 'OK'));
+      this.removeFromCart.subscribe(status => this.alertService.openSnackBar(status.message, 'OK'));
+    }
   }
 
-  addToCart(amount: number, product: Product) {
+  addToCartAction(amount: number, product: Product) {
     if (amount === 0) {
-      this.alertService.openSnackBar("Amount to be added to cart is not selected.", "OK");
+      this.addToCart.emit({state: false, message: 'Amount to be added to cart is not selected.'});
       return;
     }
 
@@ -63,7 +76,7 @@ export class ProductItemComponent implements OnInit {
     });
   }
 
-  removeFromCart(product: Product) {
+  removeFromCartAction(product: Product) {
     this.cartService.removeCart({
       id: product.id,
       name: product.name,

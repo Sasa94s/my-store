@@ -24,8 +24,8 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <button mat-flat-button color="primary" (click)="addToCart(selectedAmount, product)">Add to cart</button>
-        <button mat-flat-button color="primary" (click)="removeFromCart(product)">Remove from cart</button>
+        <button mat-flat-button color="primary" (click)="addToCartAction(selectedAmount, product)">Add to cart</button>
+        <button mat-flat-button color="primary" (click)="removeFromCartAction(product)">Remove from cart</button>
         <button *ngIf="isFulLView" mat-button routerLink="/products" class="back-link">← Back to products list</button>
     </div>
 </mat-card>

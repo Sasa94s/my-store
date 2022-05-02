@@ -4,6 +4,8 @@
             *ngFor="let product of products; let idx = index"
             [product]="product"
             [productId]="idx+1"
+            (addToCart)="alertService.openSnackBar($event.message, 'OK')"
+            (removeFromCart)="alertService.openSnackBar($event.message, 'OK')"
     >
     </app-product-item>
 </div>
