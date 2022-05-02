@@ -40,6 +40,12 @@ export class ProductItemComponent implements OnInit {
       this.productService.getProduct(this.productId)
         .subscribe(products => products.length !== 0 ? this.product = products[0] : undefined);
     }
+
+    this.cartService.getAddToCartStatusMessage()
+      .subscribe(status => this.alertService.openSnackBar('Item is added to cart successfully!', 'OK'));
+
+    this.cartService.getRemoveFromCartStatusMessage()
+      .subscribe(status => this.alertService.openSnackBar(status ? 'Item is removed from cart successfully!' : 'Item is not found to be removed from cart.', 'OK'));
   }
 
   addToCart(amount: number, product: Product) {
@@ -57,4 +63,13 @@ export class ProductItemComponent implements OnInit {
     });
   }
 
+  removeFromCart(product: Product) {
+    this.cartService.removeCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      url: product.url,
+      amount: 0,
+    });
+  }
 }
