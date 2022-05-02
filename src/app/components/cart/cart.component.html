@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayoutAlign="space-around center" class="cart-container"
+<div fxLayout="row" fxLayoutAlign="center start" class="cart-container"
      *ngIf="cartService.getCart().size !== 0; else noCartItems">
     <div fxLayout="column" fxLayoutAlign="start start" fxFlex="50" fxLayoutGap="1rem">
         <div *ngFor="let cartItem of cartService.getCart() | keyvalue" fxLayout="row"
@@ -9,11 +9,11 @@
                 <p>${{cartItem.value.price}}</p>
                 <mat-form-field appearance="fill">
                     <mat-label>Amount</mat-label>
-                    <input matInput [value]="cartItem.value.amount+''"/>
+                    <input matInput [ngModel]="cartItem.value.amount" (ngModelChange)="changeItemAmount(cartItem.value, $event)" [value]="cartItem.value.amount+''"/>
                 </mat-form-field>
             </div>
         </div>
-        <h1>Total: <span>${{totalAmount}}</span></h1>
+        <h1>Total: <span>${{totalAmount.toFixed(2)}}</span></h1>
     </div>
     <div fxLayout="column" fxFlex="30" fxLayoutGap="1rem">
         <mat-form-field appearance="fill">

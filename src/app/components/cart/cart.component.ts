@@ -22,9 +22,21 @@ export class CartComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.recalculateTotalAmount();
+    this.cartService.getUpdateCartMessage().subscribe(_ => this.recalculateTotalAmount());
   }
 
   getErrorMessage(entity: string) {
     return `Invalid ${entity}.`;
+  }
+
+  recalculateTotalAmount(): void {
+    this.totalAmount = 0;
+    this.cartService.getCart().forEach(cartItem => this.totalAmount += (cartItem.price * cartItem.amount));
+  }
+
+  changeItemAmount(cartItem: CartItem, amount: number) {
+    cartItem.amount = amount;
+    this.cartService.updateCart(cartItem);
   }
 }
