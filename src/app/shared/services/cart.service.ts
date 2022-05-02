@@ -35,4 +35,8 @@ export class CartService {
   public updateCart(cartItem: CartItem): void {
     this._addToCartMsg.next(cartItem);
   }
+
+  public clearCart(): void {
+    this._cart.clear();
+  }
 }

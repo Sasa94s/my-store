@@ -9,7 +9,9 @@
                 <p>${{cartItem.value.price}}</p>
                 <mat-form-field appearance="fill">
                     <mat-label>Amount</mat-label>
-                    <input matInput [ngModel]="cartItem.value.amount" (ngModelChange)="changeItemAmount(cartItem.value, $event)" [value]="cartItem.value.amount+''"/>
+                    <input matInput [ngModel]="cartItem.value.amount"
+                           (ngModelChange)="changeItemAmount(cartItem.value, $event)"
+                           [value]="cartItem.value.amount+''"/>
                 </mat-form-field>
             </div>
         </div>
@@ -18,21 +20,24 @@
     <div fxLayout="column" fxFlex="30" fxLayoutGap="1rem">
         <mat-form-field appearance="fill">
             <mat-label>Full Name</mat-label>
-            <input matInput placeholder="(minimum 3 characters)" [formControl]="fullName" required>
-            <mat-error *ngIf="fullName.invalid">{{getErrorMessage('full name')}}</mat-error>
+            <input matInput placeholder="(minimum 3 characters)" [formControl]="fullNameFormControl"
+                   [(ngModel)]="fullName" required>
+            <mat-error *ngIf="fullNameFormControl.invalid">{{getErrorMessage('full name')}}</mat-error>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Address</mat-label>
-            <input matInput placeholder="(minimum 6 characters)" [formControl]="address" required>
-            <mat-error *ngIf="address.invalid">{{getErrorMessage('address')}}</mat-error>
+            <input matInput placeholder="(minimum 6 characters)" [formControl]="addressFormControl"
+                   [(ngModel)]="address" required>
+            <mat-error *ngIf="addressFormControl.invalid">{{getErrorMessage('address')}}</mat-error>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Credit Card Number</mat-label>
-            <input matInput placeholder="(16-digit number)" [formControl]="creditCardNumber" required>
-            <mat-error *ngIf="creditCardNumber.invalid">{{getErrorMessage('credit card number')}}</mat-error>
+            <input matInput placeholder="(16-digit number)" [formControl]="creditCardNumberFormControl"
+                   [(ngModel)]="creditCardNumber" required>
+            <mat-error *ngIf="creditCardNumberFormControl.invalid">{{getErrorMessage('credit card number')}}</mat-error>
             <mat-hint>We'll never share your payment details with anyone else.</mat-hint>
         </mat-form-field>
-        <button mat-flat-button color="primary">Submit</button>
+        <button mat-flat-button color="primary" (click)="submitCart()" [disabled]="!isValidForm()">Submit</button>
     </div>
 </div>
 <ng-template #noCartItems>

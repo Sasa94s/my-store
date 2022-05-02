@@ -1,1 +1,11 @@
-<p>confirmation works!</p>
+<div *ngIf="!!fullName && !!totalAmount; else emptySubmission" fxLayout="column" fxLayoutAlign="center center"
+     class="confirmation-container">
+    <h1 class="confirmation-header">Success! 🎉</h1>
+    <p>Thank you, <b>{{fullName}}</b></p>
+    <p>Your <b>{{totalAmount}}</b> order is confirmed!</p>
+    <p>Please allow 1-3 business day(s) for shipping.</p>
+    <button mat-flat-button routerLink="/products" color="primary">← Back to products list</button>
+</div>
+<ng-template #emptySubmission>
+    <h1 class="text-center">No order is submitted.</h1>
+</ng-template>

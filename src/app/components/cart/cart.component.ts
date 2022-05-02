@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CartService} from "../../shared/services/cart.service";
-import {AlertService} from "../../shared/services/alert.service";
 import {FormControl, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-cart',
@@ -9,14 +9,17 @@ import {FormControl, Validators} from "@angular/forms";
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
-  fullName = new FormControl('', [Validators.required, Validators.minLength(3)]);
-  address = new FormControl('', [Validators.required, Validators.minLength(6)]);
-  creditCardNumber = new FormControl('', [Validators.required, Validators.minLength(16), Validators.maxLength(16)]);
+  fullNameFormControl = new FormControl('', [Validators.required, Validators.minLength(3)]);
+  addressFormControl = new FormControl('', [Validators.required, Validators.minLength(6)]);
+  creditCardNumberFormControl = new FormControl('', [Validators.required, Validators.minLength(16), Validators.maxLength(16)]);
 
   totalAmount: number = 0;
+  fullName: string = '';
+  address: string = '';
+  creditCardNumber: string = '';
 
   constructor(
-    private alertService: AlertService,
+    private router: Router,
     public cartService: CartService,
   ) {
   }
@@ -38,5 +41,16 @@ export class CartComponent implements OnInit {
   changeItemAmount(cartItem: CartItem, amount: number) {
     cartItem.amount = amount;
     this.cartService.updateCart(cartItem);
+  }
+
+  isValidForm(): boolean {
+    return this.totalAmount !== 0 && this.fullNameFormControl.valid && this.addressFormControl.valid && this.creditCardNumberFormControl.valid;
+  }
+
+  async submitCart(): Promise<void> {
+    if (this.isValidForm()) {
+      this.cartService.clearCart();
+      await this.router.navigate(['/cart/submit', {fullName: this.fullName, totalAmount: this.totalAmount}]);
+    }
   }
 }
